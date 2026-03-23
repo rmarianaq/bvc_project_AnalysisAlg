@@ -167,5 +167,79 @@ def run_benchmark() -> list:
     return results
 
 
+def generate_chart(results: list):
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import Patch
+
+    nombres = [r["algorithm"] for r in results]
+    tiempos = [r["time_seconds"] for r in results]
+
+    complexity = {
+        "TimSort":               "O(n log n)",
+        "Comb Sort":             "O(n log n)",
+        "Selection Sort":        "O(n²)",
+        "Tree Sort":             "O(n log n)",
+        "Pigeonhole Sort":       "O(n + k)",
+        "Bucket Sort":           "O(n + k)",
+        "QuickSort":             "O(n log n)",
+        "HeapSort":              "O(n log n)",
+        "Bitonic Sort":          "O(n log²n)",
+        "Gnome Sort":            "O(n²)",
+        "Binary Insertion Sort": "O(n²)",
+        "RadixSort":             "O(nk)",
+    }
+
+    color_map = {
+        "O(n + k)":  "#1D9E75",
+        "O(nk)":     "#1D9E75",
+        "O(n log n)":"#378ADD",
+        "O(n log²n)":"#BA7517",
+        "O(n²)":     "#A32D2D",
+    }
+
+    colores = [color_map.get(complexity.get(n, ""), "#888888") for n in nombres]
+
+    fig, ax = plt.subplots(figsize=(12, 7))
+    bars = ax.barh(nombres, tiempos, color=colores, edgecolor="white", height=0.6)
+
+    for bar, t in zip(bars, tiempos):
+        ax.text(
+            bar.get_width() * 1.02, bar.get_y() + bar.get_height() / 2,
+            f"{t:.4f}s", va="center", ha="left", fontsize=9
+        )
+
+    ax.set_xscale("log")
+    ax.set_xlabel("Tiempo en segundos (escala logarítmica)", fontsize=11)
+    ax.set_title(
+        f"Benchmark — 12 algoritmos de ordenamiento\nDataset: {results[0]['records']:,} registros",
+        fontsize=13, fontweight="bold", pad=15
+    )
+
+    leyenda = [
+        Patch(color="#1D9E75", label="O(n + k) / O(nk)"),
+        Patch(color="#378ADD", label="O(n log n)"),
+        Patch(color="#BA7517", label="O(n log²n)"),
+        Patch(color="#A32D2D", label="O(n²)"),
+    ]
+    ax.legend(
+        handles=leyenda,
+        loc="upper right",
+        fontsize=9,
+        framealpha=0.9,
+        bbox_to_anchor=(1.0, 1.0)
+    )
+    ax.invert_yaxis()
+    ax.grid(axis="x", linestyle="--", alpha=0.4)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+    # Más espacio a la derecha para las etiquetas de tiempo
+    plt.subplots_adjust(right=0.82)
+    plt.savefig("benchmark_chart.png", dpi=150, bbox_inches="tight")
+    print("\n📊 Gráfica guardada como benchmark_chart.png")
+
 if __name__ == "__main__":
-    run_benchmark()
+    results = run_benchmark()
+    generate_chart(results)
