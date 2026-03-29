@@ -130,19 +130,19 @@ def run_benchmark() -> list:
     print("-" * 55)
 
     complexity = {
-        "TimSort":               "O(n log n)",
-        "Comb Sort":             "O(n log n)",
-        "Selection Sort":        "O(n²)",
-        "Tree Sort":             "O(n log n)",
-        "Pigeonhole Sort":       "O(n + k)",
-        "Bucket Sort":           "O(n + k)",
-        "QuickSort":             "O(n log n)",
-        "HeapSort":              "O(n log n)",
-        "Bitonic Sort":          "O(n log²n)",
-        "Gnome Sort":            "O(n²)",
-        "Binary Insertion Sort": "O(n²)",
-        "RadixSort":             "O(nk)",
-    }
+    "TimSort":               "O(n log n)",
+    "Comb Sort":             "O(n log n) / O(n²) peor",
+    "Selection Sort":        "O(n²)",
+    "Tree Sort":             "O(n log n) / O(n²) peor",
+    "Pigeonhole Sort":       "O(n + k)",
+    "Bucket Sort":           "O(n + k) / O(n²) peor",
+    "QuickSort":             "O(n log n) / O(n²) peor",
+    "HeapSort":              "O(n log n)",
+    "Bitonic Sort":          "O(n log²n)",
+    "Gnome Sort":            "O(n²)",
+    "Binary Insertion Sort": "O(n²)",
+    "RadixSort":             "O(nk)",
+}
 
     for i, r in enumerate(results, 1):
         comp = complexity[r["algorithm"]]
@@ -176,30 +176,23 @@ def generate_chart(results: list):
     nombres = [r["algorithm"] for r in results]
     tiempos = [r["time_seconds"] for r in results]
 
-    complexity = {
-        "TimSort":               "O(n log n)",
-        "Comb Sort":             "O(n log n)",
-        "Selection Sort":        "O(n²)",
-        "Tree Sort":             "O(n log n)",
-        "Pigeonhole Sort":       "O(n + k)",
-        "Bucket Sort":           "O(n + k)",
-        "QuickSort":             "O(n log n)",
-        "HeapSort":              "O(n log n)",
-        "Bitonic Sort":          "O(n log²n)",
-        "Gnome Sort":            "O(n²)",
-        "Binary Insertion Sort": "O(n²)",
-        "RadixSort":             "O(nk)",
+    # Color por complejidad PROMEDIO de cada algoritmo (consistente con el documento)
+    color_por_algoritmo = {
+        "TimSort":               "#378ADD",  # O(n log n)
+        "Comb Sort":             "#378ADD",  # O(n log n) promedio
+        "Selection Sort":        "#A32D2D",  # O(n²) siempre
+        "Tree Sort":             "#378ADD",  # O(n log n) promedio
+        "Pigeonhole Sort":       "#1D9E75",  # O(n + k)
+        "Bucket Sort":           "#1D9E75",  # O(n + k) promedio
+        "QuickSort":             "#378ADD",  # O(n log n) promedio
+        "HeapSort":              "#378ADD",  # O(n log n)
+        "Bitonic Sort":          "#BA7517",  # O(n log²n)
+        "Gnome Sort":            "#A32D2D",  # O(n²)
+        "Binary Insertion Sort": "#A32D2D",  # O(n²)
+        "RadixSort":             "#1D9E75",  # O(nk)
     }
 
-    color_map = {
-        "O(n + k)":  "#1D9E75",
-        "O(nk)":     "#1D9E75",
-        "O(n log n)":"#378ADD",
-        "O(n log²n)":"#BA7517",
-        "O(n²)":     "#A32D2D",
-    }
-
-    colores = [color_map.get(complexity.get(n, ""), "#888888") for n in nombres]
+    colores = [color_por_algoritmo.get(n, "#888888") for n in nombres]
 
     fig, ax = plt.subplots(figsize=(12, 7))
     bars = ax.barh(nombres, tiempos, color=colores, edgecolor="white", height=0.6)
@@ -219,23 +212,17 @@ def generate_chart(results: list):
 
     leyenda = [
         Patch(color="#1D9E75", label="O(n + k) / O(nk)"),
-        Patch(color="#378ADD", label="O(n log n)"),
+        Patch(color="#378ADD", label="O(n log n) promedio"),
         Patch(color="#BA7517", label="O(n log²n)"),
         Patch(color="#A32D2D", label="O(n²)"),
     ]
-    ax.legend(
-        handles=leyenda,
-        loc="upper right",
-        fontsize=9,
-        framealpha=0.9,
-        bbox_to_anchor=(1.0, 1.0)
-    )
+    ax.legend(handles=leyenda, loc="upper right", fontsize=9,
+              framealpha=0.9, bbox_to_anchor=(1.0, 1.0))
     ax.invert_yaxis()
     ax.grid(axis="x", linestyle="--", alpha=0.4)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
 
-    # Más espacio a la derecha para las etiquetas de tiempo
     plt.subplots_adjust(right=0.82)
     plt.savefig("benchmark_chart.png", dpi=150, bbox_inches="tight")
     print("\n📊 Gráfica guardada como benchmark_chart.png")
