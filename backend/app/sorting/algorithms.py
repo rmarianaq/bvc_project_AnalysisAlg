@@ -116,7 +116,7 @@ def binary_insertion_sort(data: list) -> list:
 
 
 # ═══════════════════════════════════════════════════════
-# 4. QUICKSORT — O(n log n) promedio, O(n²) peor caso
+# 4. QUICKSORT — O(n²) peor caso, O(n log n) promedio
 # Versión iterativa con pila explícita para evitar RecursionError
 # ═══════════════════════════════════════════════════════
 def quicksort(data: list) -> list:
@@ -286,7 +286,7 @@ def _merge(arr: list, left: int, mid: int, right: int):
 
 
 # ═══════════════════════════════════════════════════════
-# 7. COMB SORT — O(n log n)
+# 7. COMB SORT —  O(n²) peor caso, O(n log n) promedio
 # Bubble Sort con gaps grandes que se reducen gradualmente
 # ═══════════════════════════════════════════════════════
 def comb_sort(data: list) -> list:
@@ -314,7 +314,7 @@ def comb_sort(data: list) -> list:
 
 
 # ═══════════════════════════════════════════════════════
-# 8. TREE SORT — O(n log n) promedio
+# 8. TREE SORT — O(n²) peor caso, O(n log n) promedio
 # Versión iterativa para evitar RecursionError con datasets grandes
 # ═══════════════════════════════════════════════════════
 class BSTNode:
@@ -384,7 +384,7 @@ def tree_sort(data: list) -> list:
     # Recorrido inorden iterativo
     return _inorder_iterative(root)
 # ═══════════════════════════════════════════════════════
-# 9. BUCKET SORT — O(n + k)
+# 9. BUCKET SORT — O(n²) peor caso, O(n + k) promedio
 # Distribuye en cubetas y ordena cada una
 # ═══════════════════════════════════════════════════════
 def bucket_sort(data: list) -> list:
@@ -425,7 +425,7 @@ def bucket_sort(data: list) -> list:
 
 
 # ═══════════════════════════════════════════════════════
-# 10. PIGEONHOLE SORT — O(n + k)
+# 10. PIGEONHOLE SORT — O(n²) peor caso, O(n + k) promedio
 # Una casilla por valor posible (ideal para rangos pequeños)
 # ═══════════════════════════════════════════════════════
 def pigeonhole_sort(data: list) -> list:

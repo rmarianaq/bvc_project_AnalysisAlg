@@ -130,19 +130,19 @@ def run_benchmark() -> list:
     print("-" * 55)
 
     complexity = {
-        "TimSort":               "O(n log n)",
-        "Comb Sort":             "O(n log n)",
-        "Selection Sort":        "O(n²)",
-        "Tree Sort":             "O(n log n)",
-        "Pigeonhole Sort":       "O(n + k)",
-        "Bucket Sort":           "O(n + k)",
-        "QuickSort":             "O(n log n)",
-        "HeapSort":              "O(n log n)",
-        "Bitonic Sort":          "O(n log²n)",
-        "Gnome Sort":            "O(n²)",
-        "Binary Insertion Sort": "O(n²)",
-        "RadixSort":             "O(nk)",
-    }
+    "TimSort":               "O(n log n)",
+    "Comb Sort":             "O(n²)",      # peor caso
+    "Selection Sort":        "O(n²)",
+    "Tree Sort":             "O(n²)",      # peor caso
+    "Pigeonhole Sort":       "O(n²)",      # peor caso
+    "Bucket Sort":           "O(n²)",      # peor caso
+    "QuickSort":             "O(n log n)",
+    "HeapSort":              "O(n log n)",
+    "Bitonic Sort":          "O(n log²n)",
+    "Gnome Sort":            "O(n²)",
+    "Binary Insertion Sort": "O(n²)",
+    "RadixSort":             "O(nk)",
+    }  
 
     for i, r in enumerate(results, 1):
         comp = complexity[r["algorithm"]]
@@ -177,18 +177,18 @@ def generate_chart(results: list):
     tiempos = [r["time_seconds"] for r in results]
 
     complexity = {
-        "TimSort":               "O(n log n)",
-        "Comb Sort":             "O(n log n)",
-        "Selection Sort":        "O(n²)",
-        "Tree Sort":             "O(n log n)",
-        "Pigeonhole Sort":       "O(n + k)",
-        "Bucket Sort":           "O(n + k)",
-        "QuickSort":             "O(n log n)",
-        "HeapSort":              "O(n log n)",
-        "Bitonic Sort":          "O(n log²n)",
-        "Gnome Sort":            "O(n²)",
-        "Binary Insertion Sort": "O(n²)",
-        "RadixSort":             "O(nk)",
+    "TimSort":               "O(n log n)",
+    "Comb Sort":             "O(n²)",      # peor caso
+    "Selection Sort":        "O(n²)",
+    "Tree Sort":             "O(n²)",      # peor caso
+    "Pigeonhole Sort":       "O(n²)",      # peor caso
+    "Bucket Sort":           "O(n²)",      # peor caso
+    "QuickSort":             "O(n log n)",
+    "HeapSort":              "O(n log n)",
+    "Bitonic Sort":          "O(n log²n)",
+    "Gnome Sort":            "O(n²)",
+    "Binary Insertion Sort": "O(n²)",
+    "RadixSort":             "O(nk)",
     }
 
     color_map = {
