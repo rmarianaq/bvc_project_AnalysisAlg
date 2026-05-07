@@ -72,6 +72,7 @@ def create_unified_view():
     ORDER BY dates.trade_date;
     """
 
+    cursor.execute("DROP VIEW IF EXISTS unified_prices;")
     cursor.execute(view_sql)
     conn.commit()
     cursor.close()
@@ -120,6 +121,93 @@ def get_unified_summary():
     print(f"   Días cubiertos     : {(max_date - min_date).days:,}")
     print("=" * 55)
 
+def detect_calendar_gaps() -> dict:
+    """
+    Detecta fechas donde hay operaciones en algunos activos pero no en otros.
+    Esto es normal: BVC tiene festivos distintos a NYSE.
+    
+    Estrategia adoptada: forward fill (propagar último precio conocido).
+    Impacto algorítmico: las métricas de similitud del Req. 2 operarán sobre
+    series de la misma longitud, eliminando sesgo por días no operados.
+    Si se dejaran NULL, Pearson/DTW ignorarían esas posiciones, alterando
+    la distancia calculada entre activos de distintos mercados.
+    """
+    conn   = get_connection()
+    cursor = conn.cursor()
+
+    # Fechas donde al menos un activo operó
+    cursor.execute("SELECT DISTINCT trade_date FROM daily_prices ORDER BY trade_date;")
+    all_dates = [row[0] for row in cursor.fetchall()]
+
+    # Activos registrados
+    cursor.execute("SELECT id, ticker FROM assets ORDER BY ticker;")
+    assets = cursor.fetchall()
+
+    gaps = {}  # ticker -> lista de fechas sin datos
+
+    for asset_id, ticker in assets:
+        cursor.execute(
+            "SELECT trade_date FROM daily_prices WHERE asset_id = %s;",
+            (asset_id,)
+        )
+        asset_dates = {row[0] for row in cursor.fetchall()}
+        missing = [d for d in all_dates if d not in asset_dates]
+        if missing:
+            gaps[ticker] = missing
+
+    cursor.close()
+    conn.close()
+    return {"total_dates": len(all_dates), "gaps": gaps}
+
+
+def forward_fill_unified() -> int:
+    """
+    Para cada fecha sin precio en un activo, propaga el último
+    precio de cierre conocido (forward fill).
+    
+    Esto alinea los calendarios bursátiles: si ECOPETROL.CL
+    no operó el lunes festivo colombiano pero VOO sí,
+    ECOPETROL.CL usará su último precio registrado.
+    
+    Retorna la cantidad de registros rellenados.
+    """
+    conn   = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT id, ticker FROM assets ORDER BY ticker;")
+    assets = cursor.fetchall()
+
+    cursor.execute("SELECT DISTINCT trade_date FROM daily_prices ORDER BY trade_date;")
+    all_dates = [row[0] for row in cursor.fetchall()]
+
+    filled = 0
+
+    for asset_id, ticker in assets:
+        cursor.execute("""
+            SELECT trade_date, close_price FROM daily_prices
+            WHERE asset_id = %s ORDER BY trade_date;
+        """, (asset_id,))
+        rows = {row[0]: row[1] for row in cursor.fetchall()}
+
+        last_price = None
+        for date in all_dates:
+            if date in rows:
+                last_price = rows[date]
+            elif last_price is not None:
+                # Fecha sin registro → insertar con forward fill
+                cursor.execute("""
+                    INSERT INTO daily_prices
+                        (asset_id, trade_date, close_price)
+                    VALUES (%s, %s, %s)
+                    ON CONFLICT (asset_id, trade_date) DO NOTHING;
+                """, (asset_id, date, last_price))
+                filled += cursor.rowcount
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return filled
+
 
 def run_loader():
     """
@@ -134,6 +222,21 @@ def run_loader():
 
     # 2. Mostrar resumen
     get_unified_summary()
+
+
+    # ── Manejo de calendario bursátil ──────────────────────
+    # 3. Detectar y reportar gaps por diferencias de calendario
+    gap_report = detect_calendar_gaps()
+    print(f"\n📅 Fechas únicas en el dataset: {gap_report['total_dates']:,}")
+    print(f"   Activos con gaps de calendario: {len(gap_report['gaps'])}")
+    for ticker, missing in gap_report["gaps"].items():
+        print(f"   {ticker}: {len(missing)} días sin datos (BVC/NYSE holiday diff)")
+
+    # 4. Aplicar forward fill para alinear las series
+    filled = forward_fill_unified()
+    print(f"\n✅ Forward fill aplicado: {filled} registros completados")
+    print("   Estrategia: último precio conocido propagado hacia adelante")
+    print("   Impacto: series alineadas para análisis de similitud (Req. 2)")
 
     print("\n✅ Requerimiento 1 completado exitosamente")
 
