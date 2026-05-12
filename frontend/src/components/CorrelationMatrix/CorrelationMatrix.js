@@ -50,7 +50,7 @@ function CorrelationMatrix() {
   return (
     <div className="correlation-container">
       <div className="card">
-        <h2>🔗 Matriz de Correlación de Pearson</h2>
+        <h2>Matriz de Correlación de Pearson</h2>
         <p className="correlation-description">
           Muestra las correlaciones entre todos los activos del portafolio.
           La correlación de Pearson mide la relación lineal entre dos series temporales.
@@ -61,7 +61,7 @@ function CorrelationMatrix() {
             className="btn btn-primary" 
             onClick={fetchCorrelationMatrix}
           >
-            📊 Calcular Matriz de Correlación
+            Calcular Matriz de Correlación
           </button>
         )}
 
@@ -83,7 +83,7 @@ function CorrelationMatrix() {
               onClick={fetchCorrelationMatrix}
               style={{ marginTop: '1rem' }}
             >
-              🔄 Reintentar
+              Reintentar
             </button>
           </div>
         )}
@@ -92,7 +92,7 @@ function CorrelationMatrix() {
       {matrixData && !loading && (
         <>
           <div className="card">
-            <h3>📊 Matriz de Correlación ({matrixData.tickers.length}×{matrixData.tickers.length})</h3>
+            <h3>Matriz de Correlación ({matrixData.tickers.length}×{matrixData.tickers.length})</h3>
             <p className="correlation-matrix-subtitle">
               Haz clic en una celda para ver detalles de la correlación
             </p>
@@ -137,7 +137,7 @@ function CorrelationMatrix() {
 
           {selectedCell && (
             <div className="card">
-              <h3>📈 Detalle de Correlación</h3>
+              <h3>Detalle de Correlación</h3>
               <div 
                 className="correlation-detail-card"
                 style={{ 
@@ -174,10 +174,10 @@ function CorrelationMatrix() {
                 <p><strong>Implicaciones para diversificación:</strong></p>
                 <p>
                   {Math.abs(selectedCell.value) < 0.3
-                    ? '✅ Excelente para diversificación. Los activos se mueven independientemente, reduciendo el riesgo del portafolio.'
+                    ? 'Excelente para diversificación. Los activos se mueven independientemente, reduciendo el riesgo del portafolio.'
                     : Math.abs(selectedCell.value) < 0.7
-                    ? '⚠️ Diversificación moderada. Hay cierta relación entre los activos.'
-                    : '❌ Poca diversificación. Los activos están altamente correlacionados y no reducen significativamente el riesgo.'
+                    ? 'Diversificación moderada. Hay cierta relación entre los activos.'
+                    : 'Poca diversificación. Los activos están altamente correlacionados y no reducen significativamente el riesgo.'
                   }
                 </p>
               </div>
@@ -185,7 +185,7 @@ function CorrelationMatrix() {
           )}
 
           <div className="card">
-            <h3>📚 Guía de Interpretación</h3>
+            <h3>Guía de Interpretación</h3>
             <div className="correlation-guide-grid">
               <div className="correlation-guide-box guide-strong-positive">
                 <strong>0.7 a 1.0</strong>
@@ -225,7 +225,7 @@ function CorrelationMatrix() {
           </div>
 
           <div className="card">
-            <h3>🧮 Fórmula de Correlación de Pearson</h3>
+            <h3>Fórmula de Correlación de Pearson</h3>
             <div className="correlation-formula">
               <p className="formula-text">
                 r = Σ((x_i - μ_x)(y_i - μ_y)) / (σ_x × σ_y)

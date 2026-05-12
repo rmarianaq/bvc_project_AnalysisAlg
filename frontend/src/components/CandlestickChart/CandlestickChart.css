@@ -5,6 +5,7 @@
 .candlestick-description {
   color: #666;
   margin-bottom: 2rem;
+  line-height: 1.6;
 }
 
 .candlestick-controls {
@@ -24,7 +25,9 @@
   overflow-x: auto;
   display: flex;
   justify-content: center;
-  padding: 1rem 0;
+  padding: 1.5rem 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
 }
 
 .candlestick-svg {
@@ -34,8 +37,8 @@
 
 .chart-title {
   font-size: 16px;
-  font-weight: 600;
-  fill: #1e3c72;
+  font-weight: 700;
+  fill: var(--color-darker);
 }
 
 .candlestick-interpretation {
@@ -51,6 +54,10 @@
 
 .candlestick-interpretation li {
   margin: 0.5rem 0;
+}
+
+.candlestick-interpretation strong {
+  color: var(--color-darker);
 }
 
 @media (max-width: 768px) {

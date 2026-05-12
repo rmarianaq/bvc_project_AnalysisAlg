@@ -65,10 +65,10 @@ function Dashboard() {
     return (
       <div className="card">
         <div className="error">
-          <h3>⚠️ Error de Conexión</h3>
+          <h3>Error de Conexión</h3>
           <p>{error}</p>
           <button className="btn btn-primary" onClick={fetchDashboardData} style={{ marginTop: '1rem' }}>
-            🔄 Reintentar
+            Reintentar
           </button>
         </div>
       </div>
@@ -78,19 +78,19 @@ function Dashboard() {
   return (
     <div className="dashboard-container">
       <div className="card">
-        <h2>📊 Dashboard Principal</h2>
+        <h2>Dashboard Principal</h2>
         
         {stats && (
           <div className="dashboard-stats-grid">
             <div className="dashboard-stat-card">
               <h4>Estado del Sistema</h4>
-              <div className="value">{stats.status === 'healthy' ? '✅' : '❌'}</div>
+              <div className="value">{stats.status === 'healthy' ? 'OK' : 'ERROR'}</div>
               <div className="label">{stats.status === 'healthy' ? 'Operativo' : 'Error'}</div>
             </div>
             
             <div className="dashboard-stat-card">
               <h4>Base de Datos</h4>
-              <div className="value">{stats.database === 'connected' ? '🟢' : '🔴'}</div>
+              <div className="value">{stats.database === 'connected' ? 'ON' : 'OFF'}</div>
               <div className="label">{stats.database === 'connected' ? 'Conectada' : 'Desconectada'}</div>
             </div>
             
@@ -102,7 +102,7 @@ function Dashboard() {
             
             <div className="dashboard-stat-card">
               <h4>Reporte PDF</h4>
-              <div className="value">📄</div>
+              <div className="value">PDF</div>
               <button 
                 className="btn btn-secondary" 
                 onClick={downloadPDF}
@@ -116,7 +116,7 @@ function Dashboard() {
       </div>
 
       <div className="card">
-        <h2>📈 Portafolio de Activos</h2>
+        <h2>Portafolio de Activos</h2>
         <p style={{ marginBottom: '1rem', color: '#666' }}>
           Total de {assets.length} activos financieros analizados
         </p>
@@ -152,7 +152,7 @@ function Dashboard() {
       </div>
 
       <div className="card">
-        <h2>ℹ️ Información del Proyecto</h2>
+        <h2>Información del Proyecto</h2>
         <div className="dashboard-info-section">
           <p><strong>Universidad:</strong> Universidad del Quindío</p>
           <p><strong>Programa:</strong> Ingeniería de Sistemas y Computación</p>
@@ -163,13 +163,13 @@ function Dashboard() {
           <div className="dashboard-features-box">
             <h3>Funcionalidades Implementadas:</h3>
             <ul>
-              <li>✅ ETL automatizado (Extracción, Limpieza, Unificación)</li>
-              <li>✅ 4 Algoritmos de similitud (Euclidiana, Pearson, Coseno, DTW)</li>
-              <li>✅ Detección de patrones con ventanas deslizantes</li>
-              <li>✅ Análisis de volatilidad y clasificación de riesgo</li>
-              <li>✅ Matriz de correlación completa</li>
-              <li>✅ Generación de reportes en PDF</li>
-              <li>✅ 12 Algoritmos de ordenamiento con benchmark</li>
+              <li>ETL automatizado (Extracción, Limpieza, Unificación)</li>
+              <li>4 Algoritmos de similitud (Euclidiana, Pearson, Coseno, DTW)</li>
+              <li>Detección de patrones con ventanas deslizantes</li>
+              <li>Análisis de volatilidad y clasificación de riesgo</li>
+              <li>Matriz de correlación completa</li>
+              <li>Generación de reportes en PDF</li>
+              <li>12 Algoritmos de ordenamiento con benchmark</li>
             </ul>
           </div>
         </div>

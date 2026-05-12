@@ -198,7 +198,7 @@ function CandlestickChart() {
   return (
     <div className="candlestick-container">
       <div className="card">
-        <h2>📊 Gráfico de Velas (Candlestick) con Medias Móviles</h2>
+        <h2>Gráfico de Velas (Candlestick) con Medias Móviles</h2>
         <p className="candlestick-description">
           Visualización de precios OHLC (Open, High, Low, Close) con medias móviles simples (SMA) de 20 y 50 días.
           Las velas verdes indican días alcistas y las rojas días bajistas.
@@ -241,7 +241,7 @@ function CandlestickChart() {
             onClick={fetchCandlestickData}
             disabled={loading || !selectedTicker}
           >
-            {loading ? '⏳ Cargando...' : '📊 Generar Gráfico'}
+            {loading ? 'Cargando...' : 'Generar Gráfico'}
           </button>
         </div>
 
@@ -262,7 +262,7 @@ function CandlestickChart() {
           </div>
 
           <div className="card">
-            <h3>📚 Interpretación del Gráfico</h3>
+            <h3>Interpretación del Gráfico</h3>
             <div className="candlestick-interpretation">
               <p><strong>Velas (Candlesticks):</strong></p>
               <ul>
@@ -289,7 +289,7 @@ function CandlestickChart() {
           </div>
 
           <div className="card">
-            <h3>📊 Estadísticas del Período</h3>
+            <h3>Estadísticas del Período</h3>
             <div className="stats-grid">
               <div className="stat-card">
                 <h4>Precio Inicial</h4>

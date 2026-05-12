@@ -6,6 +6,7 @@ import VolatilityAnalysis from './components/VolatilityAnalysis/VolatilityAnalys
 import PatternAnalysis from './components/PatternAnalysis/PatternAnalysis';
 import CorrelationMatrix from './components/CorrelationMatrix/CorrelationMatrix';
 import CandlestickChart from './components/CandlestickChart/CandlestickChart';
+import SortingBenchmark from './components/SortingBenchmark/SortingBenchmark';
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -24,6 +25,8 @@ function App() {
         return <CorrelationMatrix />;
       case 'candlestick':
         return <CandlestickChart />;
+      case 'sorting':
+        return <SortingBenchmark />;
       default:
         return <Dashboard />;
     }
@@ -33,7 +36,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div className="header-content">
-          <h1>📊 BVC Analysis</h1>
+          <h1>BVC Analysis</h1>
           <p className="subtitle">Análisis Algorítmico de Activos Financieros</p>
         </div>
       </header>
@@ -43,37 +46,43 @@ function App() {
           className={activeTab === 'dashboard' ? 'nav-button active' : 'nav-button'}
           onClick={() => setActiveTab('dashboard')}
         >
-          🏠 Dashboard
+          Dashboard
         </button>
         <button
           className={activeTab === 'similarity' ? 'nav-button active' : 'nav-button'}
           onClick={() => setActiveTab('similarity')}
         >
-          🔍 Similitud
+          Similitud
         </button>
         <button
           className={activeTab === 'volatility' ? 'nav-button active' : 'nav-button'}
           onClick={() => setActiveTab('volatility')}
         >
-          📈 Volatilidad
+          Volatilidad
         </button>
         <button
           className={activeTab === 'patterns' ? 'nav-button active' : 'nav-button'}
           onClick={() => setActiveTab('patterns')}
         >
-          🎯 Patrones
+          Patrones
         </button>
         <button
           className={activeTab === 'correlation' ? 'nav-button active' : 'nav-button'}
           onClick={() => setActiveTab('correlation')}
         >
-          🔗 Correlación
+          Correlación
         </button>
         <button
           className={activeTab === 'candlestick' ? 'nav-button active' : 'nav-button'}
           onClick={() => setActiveTab('candlestick')}
         >
-          📊 Velas
+          Velas
+        </button>
+        <button
+          className={activeTab === 'sorting' ? 'nav-button active' : 'nav-button'}
+          onClick={() => setActiveTab('sorting')}
+        >
+          Ordenamiento
         </button>
       </nav>
 

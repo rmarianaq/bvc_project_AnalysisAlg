@@ -44,13 +44,13 @@ function VolatilityAnalysis() {
   const getRiskIcon = (riskLevel) => {
     switch (riskLevel) {
       case 'CONSERVADOR':
-        return '🟢';
+        return '●';
       case 'MODERADO':
-        return '🟡';
+        return '●';
       case 'AGRESIVO':
-        return '🔴';
+        return '●';
       default:
-        return '⚪';
+        return '●';
     }
   };
 
@@ -88,7 +88,7 @@ function VolatilityAnalysis() {
   return (
     <div className="volatility-container">
       <div className="card">
-        <h2>📈 Análisis de Volatilidad y Clasificación de Riesgo</h2>
+        <h2>Análisis de Volatilidad y Clasificación de Riesgo</h2>
         <p className="volatility-description">
           La volatilidad histórica anualizada se calcula como σ_anual = σ_diaria × √252.
           Los activos se clasifican en tres categorías de riesgo según su volatilidad.
@@ -122,7 +122,7 @@ function VolatilityAnalysis() {
       </div>
 
       <div className="card">
-        <h3>🔍 Filtrar por Nivel de Riesgo</h3>
+        <h3>Filtrar por Nivel de Riesgo</h3>
         <div className="volatility-filter-buttons">
           <button 
             className={filter === 'ALL' ? 'btn btn-primary' : 'btn btn-secondary'}
@@ -134,25 +134,25 @@ function VolatilityAnalysis() {
             className={filter === 'CONSERVADOR' ? 'btn btn-primary' : 'btn btn-secondary'}
             onClick={() => setFilter('CONSERVADOR')}
           >
-            🟢 Conservadores ({stats.conservador})
+            Conservadores ({stats.conservador})
           </button>
           <button 
             className={filter === 'MODERADO' ? 'btn btn-primary' : 'btn btn-secondary'}
             onClick={() => setFilter('MODERADO')}
           >
-            🟡 Moderados ({stats.moderado})
+            Moderados ({stats.moderado})
           </button>
           <button 
             className={filter === 'AGRESIVO' ? 'btn btn-primary' : 'btn btn-secondary'}
             onClick={() => setFilter('AGRESIVO')}
           >
-            🔴 Agresivos ({stats.agresivo})
+            Agresivos ({stats.agresivo})
           </button>
         </div>
       </div>
 
       <div className="card">
-        <h3>📊 Clasificación de Activos por Volatilidad</h3>
+        <h3>Clasificación de Activos por Volatilidad</h3>
         <p className="volatility-table-subtitle">
           Mostrando {filteredData.length} de {stats.total} activos
         </p>
@@ -202,10 +202,10 @@ function VolatilityAnalysis() {
       </div>
 
       <div className="card">
-        <h3>📚 Criterios de Clasificación</h3>
+        <h3>Criterios de Clasificación</h3>
         <div className="volatility-criteria">
           <div className="criteria-box criteria-conservador">
-            <strong>🟢 CONSERVADOR (Volatilidad &lt; 15%)</strong>
+            <strong>CONSERVADOR (Volatilidad &lt; 15%)</strong>
             <p>
               Activos de bajo riesgo. Típicamente bonos del tesoro, ETFs de renta fija o acciones de empresas muy estables.
               Movimientos de precio predecibles y menor potencial de pérdidas.
@@ -213,7 +213,7 @@ function VolatilityAnalysis() {
           </div>
 
           <div className="criteria-box criteria-moderado">
-            <strong>🟡 MODERADO (15% ≤ Volatilidad &lt; 25%)</strong>
+            <strong>MODERADO (15% ≤ Volatilidad &lt; 25%)</strong>
             <p>
               Activos de riesgo medio. Acciones de mercados desarrollados, ETFs diversificados.
               Balance entre riesgo y retorno potencial.
@@ -221,7 +221,7 @@ function VolatilityAnalysis() {
           </div>
 
           <div className="criteria-box criteria-agresivo">
-            <strong>🔴 AGRESIVO (Volatilidad ≥ 25%)</strong>
+            <strong>AGRESIVO (Volatilidad ≥ 25%)</strong>
             <p>
               Activos de alto riesgo. Acciones de mercados emergentes, criptomonedas, ETFs sectoriales.
               Mayor potencial de retorno pero también de pérdidas significativas.
@@ -231,7 +231,7 @@ function VolatilityAnalysis() {
       </div>
 
       <div className="card">
-        <h3>🧮 Fórmula de Cálculo</h3>
+        <h3>Fórmula de Cálculo</h3>
         <div className="volatility-formula">
           <p><strong>Volatilidad Anualizada:</strong></p>
           <p className="formula-text">

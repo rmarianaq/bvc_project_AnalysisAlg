@@ -76,7 +76,7 @@ function SimilarityAnalysis() {
   return (
     <div className="similarity-container">
       <div className="card">
-        <h2>🔍 Análisis de Similitud entre Activos</h2>
+        <h2>Análisis de Similitud entre Activos</h2>
         <p className="similarity-description">
           Compara dos activos usando 4 algoritmos diferentes: Distancia Euclidiana, 
           Correlación de Pearson, Similitud por Coseno y Dynamic Time Warping (DTW).
@@ -121,7 +121,7 @@ function SimilarityAnalysis() {
           onClick={compareSimilarity}
           disabled={loading || !tickerA || !tickerB}
         >
-          {loading ? '⏳ Calculando...' : '🔍 Comparar Similitud'}
+          {loading ? 'Calculando...' : 'Comparar Similitud'}
         </button>
 
         {error && (
@@ -134,7 +134,7 @@ function SimilarityAnalysis() {
       {result && (
         <>
           <div className="card">
-            <h3>📊 Información de la Comparación</h3>
+            <h3>Información de la Comparación</h3>
             <div className="similarity-info-grid">
               <div className="similarity-info-box">
                 <div className="info-label">Activo A</div>
@@ -158,7 +158,7 @@ function SimilarityAnalysis() {
           </div>
 
           <div className="card">
-            <h3>📈 Resultados de Similitud</h3>
+            <h3>Resultados de Similitud</h3>
             
             <div className="similarity-results-grid">
               <div className="similarity-metric-card euclidean">
@@ -221,7 +221,7 @@ function SimilarityAnalysis() {
           </div>
 
           <div className="card">
-            <h3>📚 Interpretación de Resultados</h3>
+            <h3>Interpretación de Resultados</h3>
             <div className="similarity-interpretation">
               <p><strong>Distancia Euclidiana ({result.euclidean.toFixed(4)}):</strong> {
                 result.euclidean < 0.1 ? 'Las series son muy similares en magnitud.' :

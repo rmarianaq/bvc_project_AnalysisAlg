@@ -62,7 +62,7 @@ function PatternAnalysis() {
   return (
     <div className="pattern-container">
       <div className="card">
-        <h2>🎯 Análisis de Patrones</h2>
+        <h2>Análisis de Patrones</h2>
         <p className="pattern-description">
           Detecta patrones en series temporales usando algoritmos de ventanas deslizantes.
           Analiza días consecutivos al alza y picos de volatilidad.
@@ -89,7 +89,7 @@ function PatternAnalysis() {
           onClick={analyzePatterns}
           disabled={loading || !selectedTicker}
         >
-          {loading ? '⏳ Analizando...' : '🎯 Analizar Patrones'}
+          {loading ? 'Analizando...' : 'Analizar Patrones'}
         </button>
 
         {error && (
@@ -102,7 +102,7 @@ function PatternAnalysis() {
       {patternData && (
         <>
           <div className="card">
-            <h3>📊 Resumen del Activo: {patternData.ticker}</h3>
+            <h3>Resumen del Activo: {patternData.ticker}</h3>
             
             <div className="stats-grid">
               <div 
@@ -145,7 +145,7 @@ function PatternAnalysis() {
           </div>
 
           <div className="card">
-            <h3>📈 Patrón 1: Días Consecutivos al Alza</h3>
+            <h3>Patrón 1: Días Consecutivos al Alza</h3>
             <p className="pattern-section-description">
               Algoritmo de ventana deslizante que detecta secuencias de 3 días consecutivos con precios crecientes.
               <br/>
@@ -214,7 +214,7 @@ function PatternAnalysis() {
           </div>
 
           <div className="card">
-            <h3>📊 Patrón 2: Picos de Volatilidad</h3>
+            <h3>Patrón 2: Picos de Volatilidad</h3>
             <p className="pattern-section-description">
               Detecta ventanas donde la desviación estándar supera 2× la volatilidad global.
               <br/>
@@ -289,7 +289,7 @@ function PatternAnalysis() {
           </div>
 
           <div className="card">
-            <h3>📚 Interpretación de Patrones</h3>
+            <h3>Interpretación de Patrones</h3>
             <div className="pattern-interpretation">
               <p>
                 <strong>Días Consecutivos al Alza ({patternData.consecutive_rises.frequency_pct.toFixed(2)}%):</strong> {

@@ -33,6 +33,7 @@ from app.similarity.patterns import (
     calculate_volatility
 )
 from app.api.reports import generate_pdf_report
+from app.sorting.benchmark import run_benchmark, get_top_volume_days
 
 app = FastAPI(
     title="BVC Analysis API",
@@ -129,7 +130,9 @@ def root():
             "correlation": "/similarity/correlation-matrix",
             "patterns": "/patterns/{ticker}",
             "volatility": "/volatility/all",
-            "candlestick": "/candlestick/{ticker}"
+            "candlestick": "/candlestick/{ticker}",
+            "sorting": "/sorting/benchmark",
+            "top_volume": "/sorting/top-volume"
         }
     }
 
@@ -504,6 +507,50 @@ def generate_report():
             status_code=500,
             detail=f"Dependencias faltantes: {str(e)}. Instalar con: pip install reportlab matplotlib seaborn"
         )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/sorting/benchmark")
+def get_sorting_benchmark():
+    """
+    Ejecuta el benchmark de 12 algoritmos de ordenamiento sobre el dataset completo.
+    
+    Requerimiento 2: Análisis comparativo de algoritmos de ordenamiento.
+    
+    Ordena los registros por:
+    1. Fecha de cotización (ascendente)
+    2. Precio de cierre (desempate)
+    
+    Retorna los tiempos de ejecución de cada algoritmo.
+    """
+    try:
+        results = run_benchmark()
+        return {
+            "results": results,
+            "total_algorithms": len(results),
+            "dataset_size": results[0]["records"] if results else 0
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/sorting/top-volume")
+def get_top_volume(limit: int = 15):
+    """
+    Retorna los días con mayor volumen de negociación.
+    
+    Requerimiento 2: Top 15 días con mayor volumen ordenados de manera ascendente.
+    
+    Parámetros:
+    - limit: número de registros a retornar (default: 15)
+    """
+    try:
+        top_days = get_top_volume_days(limit)
+        return {
+            "top_volume_days": top_days,
+            "count": len(top_days)
+        }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

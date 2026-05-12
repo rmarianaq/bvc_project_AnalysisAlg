@@ -5,7 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="84dd2179-3a90-4885-a9a5-ef54c81b4f08" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/CandlestickChart/CandlestickChart.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/CandlestickChart/CandlestickChart.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/CandlestickChart/CandlestickChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/CandlestickChart/CandlestickChart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/CorrelationMatrix/CorrelationMatrix.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/CorrelationMatrix/CorrelationMatrix.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/CorrelationMatrix/CorrelationMatrix.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/CorrelationMatrix/CorrelationMatrix.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Dashboard/Dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Dashboard/Dashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Dashboard/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Dashboard/Dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PatternAnalysis/PatternAnalysis.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PatternAnalysis/PatternAnalysis.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PatternAnalysis/PatternAnalysis.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PatternAnalysis/PatternAnalysis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/SimilarityAnalysis/SimilarityAnalysis.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SimilarityAnalysis/SimilarityAnalysis.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/SimilarityAnalysis/SimilarityAnalysis.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SimilarityAnalysis/SimilarityAnalysis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/VolatilityAnalysis/VolatilityAnalysis.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/VolatilityAnalysis/VolatilityAnalysis.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/VolatilityAnalysis/VolatilityAnalysis.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/VolatilityAnalysis/VolatilityAnalysis.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +76,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1778601238934</updated>
-      <workItem from="1778601246624" duration="2194000" />
+      <workItem from="1778601246624" duration="4822000" />
     </task>
     <servers />
   </component>
