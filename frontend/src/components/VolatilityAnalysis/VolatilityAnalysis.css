@@ -1,0 +1,162 @@
+.volatility-container {
+  width: 100%;
+}
+
+.volatility-description {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.volatility-stat-total {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.volatility-stat-conservador {
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+}
+
+.volatility-stat-moderado {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+}
+
+.volatility-stat-agresivo {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+}
+
+.volatility-filter-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.volatility-table-subtitle {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.volatility-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.volatility-bar-bg {
+  width: 100px;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.volatility-bar-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.volatility-bar-fill.risk-conservador {
+  background: #4caf50;
+}
+
+.volatility-bar-fill.risk-moderado {
+  background: #ff9800;
+}
+
+.volatility-bar-fill.risk-agresivo {
+  background: #f44336;
+}
+
+.volatility-value {
+  font-weight: 600;
+}
+
+.return-positive {
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.return-negative {
+  color: #f44336;
+  font-weight: 600;
+}
+
+.risk-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.risk-badge.risk-conservador {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.risk-badge.risk-moderado {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.risk-badge.risk-agresivo {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.volatility-criteria {
+  line-height: 1.8;
+  color: #555;
+}
+
+.criteria-box {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.criteria-box.criteria-conservador {
+  background: #e8f5e9;
+  border-left: 4px solid #4caf50;
+}
+
+.criteria-box.criteria-moderado {
+  background: #fff3e0;
+  border-left: 4px solid #ff9800;
+}
+
+.criteria-box.criteria-agresivo {
+  background: #ffebee;
+  border-left: 4px solid #f44336;
+}
+
+.criteria-box p {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
+.volatility-formula {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  font-family: monospace;
+}
+
+.formula-text {
+  font-size: 1.1rem;
+  margin: 1rem 0;
+}
+
+.formula-description {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .volatility-filter-buttons {
+    flex-direction: column;
+  }
+  
+  .volatility-bar-bg {
+    width: 60px;
+  }
+}

@@ -1,0 +1,190 @@
+.pattern-container {
+  width: 100%;
+}
+
+.pattern-description {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.pattern-error {
+  margin-top: 1rem;
+}
+
+.pattern-section-description {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.pattern-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.pattern-metric-box {
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.pattern-metric-box .metric-label {
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+}
+
+.pattern-metric-box .metric-value-large {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.pattern-metric-box .metric-unit {
+  font-size: 0.8rem;
+}
+
+.pattern-metric-frequency {
+  background: #e3f2fd;
+}
+
+.pattern-metric-frequency .metric-label {
+  color: #1976d2;
+}
+
+.pattern-metric-frequency .metric-value-large {
+  color: #1565c0;
+}
+
+.pattern-metric-frequency .metric-unit {
+  color: #1976d2;
+}
+
+.pattern-metric-percentage {
+  background: #f3e5f5;
+}
+
+.pattern-metric-percentage .metric-label {
+  color: #7b1fa2;
+}
+
+.pattern-metric-percentage .metric-value-large {
+  color: #6a1b9a;
+}
+
+.pattern-metric-percentage .metric-unit {
+  color: #7b1fa2;
+}
+
+.pattern-metric-windows {
+  background: #e8f5e9;
+}
+
+.pattern-metric-windows .metric-label {
+  color: #388e3c;
+}
+
+.pattern-metric-windows .metric-value-large {
+  color: #2e7d32;
+}
+
+.pattern-metric-windows .metric-unit {
+  color: #388e3c;
+}
+
+.pattern-metric-spikes {
+  background: #ffebee;
+}
+
+.pattern-metric-spikes .metric-label {
+  color: #c62828;
+}
+
+.pattern-metric-spikes .metric-value-large {
+  color: #b71c1c;
+}
+
+.pattern-metric-spikes .metric-unit {
+  color: #c62828;
+}
+
+.pattern-metric-spike-pct {
+  background: #fff3e0;
+}
+
+.pattern-metric-spike-pct .metric-label {
+  color: #e65100;
+}
+
+.pattern-metric-spike-pct .metric-value-large {
+  color: #d84315;
+}
+
+.pattern-metric-spike-pct .metric-unit {
+  color: #e65100;
+}
+
+.pattern-metric-global {
+  background: #e0f2f1;
+}
+
+.pattern-metric-global .metric-label {
+  color: #00695c;
+}
+
+.pattern-metric-global .metric-value-large {
+  color: #004d40;
+}
+
+.pattern-metric-global .metric-unit {
+  color: #00695c;
+}
+
+.pattern-table-title {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.change-positive {
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.change-negative {
+  color: #f44336;
+  font-weight: 600;
+}
+
+.spike-volatility {
+  font-weight: 600;
+  color: #f44336;
+}
+
+.ratio-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.ratio-badge.ratio-high {
+  background: #ffcdd2;
+  color: #c62828;
+}
+
+.ratio-badge.ratio-medium {
+  background: #fff9c4;
+  color: #f57f17;
+}
+
+.pattern-interpretation {
+  line-height: 1.8;
+  color: #555;
+}
+
+.pattern-interpretation p {
+  margin: 1rem 0;
+}
+
+@media (max-width: 768px) {
+  .pattern-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}

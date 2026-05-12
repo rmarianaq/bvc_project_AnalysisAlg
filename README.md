@@ -65,7 +65,12 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 ```bash
-pip install fastapi uvicorn psycopg2-binary python-dotenv requests matplotlib
+pip install -r requirements.txt
+```
+
+O instalar manualmente:
+```bash
+pip install fastapi uvicorn psycopg2-binary python-dotenv requests matplotlib seaborn reportlab numpy
 ```
 
 ---
@@ -106,15 +111,98 @@ python -c "from app.sorting.benchmark import run_benchmark, generate_chart; gene
 > `benchmark_chart.png` en la carpeta `backend/`.
 > Selection Sort puede tardar varios minutos sobre el dataset completo.
 
+### Paso 6 — Análisis de patrones y volatilidad (Requerimiento 3)
+```bash
+python -c "from app.similarity.patterns import get_all_assets_volatility; [print(f\"{a['ticker']}: {a['annual_volatility']:.2f}% - {a['risk_level']}\") for a in get_all_assets_volatility()]"
+```
+
+> Este paso calcula la volatilidad de todos los activos y los clasifica
+> en: CONSERVADOR, MODERADO o AGRESIVO.
+
 ---
 
-## Iniciar el servidor FastAPI
+## Iniciar el servidor FastAPI (Requerimiento 4 y 5)
 ```bash
 uvicorn app.main:app --reload
 ```
 
 La API queda disponible en `http://localhost:8000`.
 La documentación automática está en `http://localhost:8000/docs`.
+
+---
+
+## Iniciar el Frontend (Requerimiento 5)
+
+### Primera vez - Instalar dependencias:
+```bash
+cd frontend
+npm install
+```
+
+### Iniciar aplicación React:
+```bash
+npm start
+```
+
+El frontend se abrirá automáticamente en `http://localhost:3000`.
+
+**Nota:** El backend debe estar corriendo en `http://localhost:8000` para que el frontend funcione correctamente.
+
+---
+
+## Uso Completo del Sistema
+
+### 1. Iniciar Backend (Terminal 1):
+```bash
+cd backend
+venv\Scripts\activate
+uvicorn app.main:app --reload
+```
+
+### 2. Iniciar Frontend (Terminal 2):
+```bash
+cd frontend
+npm start
+```
+
+### 3. Acceder a la aplicación:
+- **Frontend:** http://localhost:3000
+- **API Backend:** http://localhost:8000
+- **Documentación API:** http://localhost:8000/docs
+
+---
+
+### Endpoints disponibles:
+
+| Endpoint | Método | Descripción |
+|---|---|---|
+| `/assets` | GET | Lista todos los activos del portafolio |
+| `/assets/{ticker}/prices` | GET | Precios históricos de un activo |
+| `/similarity/compare` | POST | Compara dos activos (4 algoritmos) |
+| `/similarity/correlation-matrix` | GET | Matriz de correlación completa |
+| `/patterns/{ticker}` | GET | Análisis de patrones de un activo |
+| `/volatility/all` | GET | Clasificación de riesgo de todos |
+| `/volatility/{ticker}` | GET | Volatilidad de un activo |
+| `/candlestick/{ticker}` | GET | Datos para gráfico de velas + SMAs |
+| `/reports/generate-pdf` | POST | Genera reporte técnico en PDF |
+
+### Ejemplo de uso de la API:
+
+```bash
+# Obtener todos los activos
+curl http://localhost:8000/assets
+
+# Comparar dos activos
+curl -X POST http://localhost:8000/similarity/compare \
+  -H "Content-Type: application/json" \
+  -d "{\"ticker_a\":\"VOO\",\"ticker_b\":\"SPY\"}"
+
+# Obtener clasificación de riesgo
+curl http://localhost:8000/volatility/all
+
+# Generar reporte PDF
+curl -X POST http://localhost:8000/reports/generate-pdf --output reporte.pdf
+```
 
 ---
 
@@ -125,13 +213,15 @@ bvc_project_AnalysisAlg/
 ├── backend/
 │   ├── .env                  ← Variables de entorno (no se sube al repo)
 │   ├── app/
-│   │   ├── api/              ← Endpoints REST
+│   │   ├── api/              ← Endpoints REST y generación de reportes
 │   │   ├── core/             ← Conexión a BD y modelos
 │   │   ├── etl/              ← Extracción, limpieza y carga
-│   │   └── sorting/          ← 12 algoritmos + benchmark
+│   │   ├── similarity/       ← Algoritmos de similitud y patrones
+│   │   ├── sorting/          ← 12 algoritmos + benchmark
+│   │   └── main.py           ← API FastAPI
 │   └── venv/                 ← Entorno virtual (no se sube al repo)
 │
-├── frontend/                 ← Aplicación React
+├── frontend/                 ← Aplicación React (próximamente)
 │   └── src/
 │
 ├── .gitignore
@@ -169,10 +259,51 @@ bvc_project_AnalysisAlg/
 
 ---
 
+## Documentación del Proyecto
+
+Este proyecto incluye documentación exhaustiva que cumple con todos los requisitos académicos:
+
+| Documento | Descripción |
+|-----------|-------------|
+| **README.md** | Guía de instalación y uso (este archivo) |
+| **DOCUMENTO_DISEÑO.md** | Arquitectura del sistema y decisiones de diseño |
+| **DETALLES_IMPLEMENTACION.md** | Explicación técnica detallada de cada requerimiento |
+| **USO_INTELIGENCIA_ARTIFICIAL.md** | Declaración transparente del uso de IA |
+| **CUMPLIMIENTO_RESTRICCIONES.md** | Verificación de cumplimiento de todas las restricciones |
+| **ESTADO_PROYECTO.md** | Estado de completitud de requerimientos |
+| **EJEMPLOS_USO.md** | Ejemplos prácticos de uso de la API |
+
+### Cumplimiento de Restricciones Académicas
+
+✅ **Documento de diseño con arquitectura:** `DOCUMENTO_DISEÑO.md`  
+✅ **Explicación técnica por requerimiento:** `DETALLES_IMPLEMENTACION.md`  
+✅ **Documentación de uso de IA:** `USO_INTELIGENCIA_ARTIFICIAL.md`  
+✅ **No uso de yfinance/pandas_datareader:** Peticiones HTTP directas  
+✅ **No uso de funciones de alto nivel:** Implementación manual de algoritmos  
+✅ **No datasets estáticos:** ETL automatizado reproducible  
+✅ **Scraping ético:** Rate limiting, timeout, User-Agent  
+✅ **Análisis de complejidad:** Documentado para cada algoritmo  
+
+**Verificación completa:** Ver `CUMPLIMIENTO_RESTRICCIONES.md`
+
 ## Uso de inteligencia artificial
 
-Este proyecto utilizó Claude (Anthropic) como herramienta de apoyo en el desarrollo.
-El uso de IA se limitó a soporte en implementación y documentación.
+Este proyecto utilizó **Claude 3.5 Sonnet (Anthropic)** como herramienta de apoyo.
+
+**Áreas donde SE usó IA:**
+- Código boilerplate (estructura de archivos, configuración)
+- Documentación técnica (redacción de README, docstrings)
+- Debugging (identificación de errores)
+
+**Áreas donde NO SE usó IA (100% trabajo original):**
+- Diseño algorítmico
+- Análisis de complejidad
+- Implementación de algoritmos core
+- Decisiones arquitectónicas
+- Validación de resultados
+
+**Declaración completa:** Ver `USO_INTELIGENCIA_ARTIFICIAL.md`
+
 El diseño algorítmico, el análisis de complejidad y los resultados son responsabilidad
 del equipo de desarrollo, conforme a los lineamientos del enunciado del proyecto.
 

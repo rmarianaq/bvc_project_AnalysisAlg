@@ -1,0 +1,189 @@
+.correlation-container {
+  width: 100%;
+}
+
+.correlation-description {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.loading-detail {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.correlation-matrix-subtitle {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.correlation-matrix-wrapper {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 600px;
+}
+
+.correlation-matrix-table {
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  min-width: 100%;
+}
+
+.correlation-matrix-thead {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+}
+
+.correlation-matrix-corner {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  background: #f8f9fa;
+  position: sticky;
+  left: 0;
+  z-index: 11;
+}
+
+.correlation-matrix-header-cell {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  background: #f8f9fa;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  min-width: 30px;
+  font-weight: 600;
+}
+
+.correlation-matrix-row-header {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  background: #f8f9fa;
+  font-weight: 600;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+.correlation-matrix-cell {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  text-align: center;
+  min-width: 50px;
+  transition: transform 0.2s ease;
+}
+
+.correlation-matrix-cell.clickable {
+  cursor: pointer;
+}
+
+.correlation-matrix-cell.clickable:hover {
+  transform: scale(1.1);
+  z-index: 5;
+}
+
+.correlation-matrix-cell.diagonal {
+  font-weight: 700;
+  cursor: default;
+}
+
+.correlation-detail-card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.correlation-detail-tickers {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.correlation-detail-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.correlation-detail-label {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.correlation-interpretation {
+  line-height: 1.8;
+  color: #555;
+}
+
+.correlation-interpretation p {
+  margin: 1rem 0;
+}
+
+.correlation-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.correlation-guide-box {
+  padding: 1rem;
+  color: white;
+  border-radius: 8px;
+}
+
+.correlation-guide-box.guide-strong-positive {
+  background: #4caf50;
+}
+
+.correlation-guide-box.guide-moderate-positive {
+  background: #8bc34a;
+}
+
+.correlation-guide-box.guide-weak {
+  background: #ffeb3b;
+  color: #333;
+}
+
+.correlation-guide-box.guide-moderate-negative {
+  background: #ff9800;
+}
+
+.correlation-guide-box.guide-strong-negative {
+  background: #f44336;
+}
+
+.correlation-guide-box p {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+.correlation-formula {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  font-family: monospace;
+}
+
+.formula-text {
+  font-size: 1.1rem;
+  margin: 1rem 0;
+}
+
+.formula-description {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .correlation-guide-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .correlation-matrix-table {
+    font-size: 0.65rem;
+  }
+  
+  .correlation-matrix-cell {
+    min-width: 40px;
+  }
+}

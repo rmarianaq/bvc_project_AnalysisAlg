@@ -1,0 +1,68 @@
+.candlestick-container {
+  width: 100%;
+}
+
+.candlestick-description {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.candlestick-controls {
+  display: grid;
+  grid-template-columns: 2fr 1fr auto;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  align-items: end;
+}
+
+.candlestick-error {
+  margin-top: 1rem;
+}
+
+.chart-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.candlestick-svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.chart-title {
+  font-size: 16px;
+  font-weight: 600;
+  fill: #1e3c72;
+}
+
+.candlestick-interpretation {
+  line-height: 1.8;
+  color: #555;
+}
+
+.candlestick-interpretation ul {
+  margin-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.candlestick-interpretation li {
+  margin: 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+  .candlestick-controls {
+    grid-template-columns: 1fr;
+  }
+  
+  .chart-wrapper {
+    overflow-x: scroll;
+  }
+  
+  .candlestick-svg {
+    min-width: 600px;
+  }
+}
