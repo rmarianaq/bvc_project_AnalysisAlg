@@ -6,13 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="84dd2179-3a90-4885-a9a5-ef54c81b4f08" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUIA_EJECUCION.md" beforeDir="false" afterPath="$PROJECT_DIR$/GUIA_EJECUCION.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/core/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/core/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/similarity/patterns.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/similarity/patterns.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iniciar_backend.bat" beforeDir="false" afterPath="$PROJECT_DIR$/iniciar_backend.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iniciar_frontend.bat" beforeDir="false" afterPath="$PROJECT_DIR$/iniciar_frontend.bat" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +36,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "git-widget-placeholder": "despliegue",
+    "git-widget-placeholder": "despliegue2",
     "go.import.settings.migrated": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
