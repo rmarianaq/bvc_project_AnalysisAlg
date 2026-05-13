@@ -282,7 +282,8 @@ def get_all_assets_volatility() -> list:
                 "annual_volatility": vol_data["annual_volatility"],
                 "recent_volatility": vol_data["recent_volatility"],
                 "risk_level": risk_level,
-                "mean_return": vol_data["mean_return"]
+                "mean_return": vol_data["mean_return"],
+                "data_points": vol_data.get("data_points", 0)
             })
     
     # Ordenar por volatilidad descendente usando algoritmo manual

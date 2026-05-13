@@ -20,6 +20,19 @@ def get_connection():
     return connection
 
 
+def init_db():
+    """
+    Inicializa la base de datos creando las tablas principales.
+    Es idempotente: puede ejecutarse múltiples veces sin problemas.
+    """
+    from app.core.startup import create_main_tables
+    tables = create_main_tables()
+    if tables:
+        print(f"✅ Tablas creadas: {', '.join(tables)}")
+    else:
+        print("✅ Tablas ya existen")
+
+
 def test_connection():
     """
     Prueba que la conexión funcione correctamente.

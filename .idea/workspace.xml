@@ -6,21 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="84dd2179-3a90-4885-a9a5-ef54c81b4f08" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUIA_EJECUCION.md" beforeDir="false" afterPath="$PROJECT_DIR$/GUIA_EJECUCION.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/core/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/core/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/CandlestickChart/CandlestickChart.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/CandlestickChart/CandlestickChart.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/CandlestickChart/CandlestickChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/CandlestickChart/CandlestickChart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/CorrelationMatrix/CorrelationMatrix.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/CorrelationMatrix/CorrelationMatrix.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/CorrelationMatrix/CorrelationMatrix.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/CorrelationMatrix/CorrelationMatrix.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Dashboard/Dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Dashboard/Dashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Dashboard/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Dashboard/Dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/PatternAnalysis/PatternAnalysis.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PatternAnalysis/PatternAnalysis.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/PatternAnalysis/PatternAnalysis.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PatternAnalysis/PatternAnalysis.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/SimilarityAnalysis/SimilarityAnalysis.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SimilarityAnalysis/SimilarityAnalysis.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/SimilarityAnalysis/SimilarityAnalysis.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SimilarityAnalysis/SimilarityAnalysis.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/VolatilityAnalysis/VolatilityAnalysis.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/VolatilityAnalysis/VolatilityAnalysis.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/VolatilityAnalysis/VolatilityAnalysis.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/VolatilityAnalysis/VolatilityAnalysis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/similarity/patterns.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/similarity/patterns.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iniciar_backend.bat" beforeDir="false" afterPath="$PROJECT_DIR$/iniciar_backend.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iniciar_frontend.bat" beforeDir="false" afterPath="$PROJECT_DIR$/iniciar_frontend.bat" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,14 +22,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 4
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="3Dd9m5sJp3vuZ7YATucihf6cBWe" />
   <component name="ProjectViewState">
     <option name="showExcludedFiles" value="false" />
@@ -51,7 +43,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "despliegue",
     "go.import.settings.migrated": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",

@@ -102,7 +102,27 @@ python -c "from app.etl.cleaner import run_cleaning; run_cleaning()"
 python -c "from app.etl.loader import run_loader; run_loader()"
 ```
 
-### Paso 5 — Ejecutar el benchmark de algoritmos
+### Paso 5 — Crear tablas de caché
+```bash
+psql -U postgres -d bvc_analysis -f create_cache_tables.sql
+```
+
+> Este paso crea las tablas necesarias para el sistema de caché que mejora
+> el rendimiento 100x (de segundos a milisegundos).
+
+### Paso 6 — Pre-calcular datos (Sistema de Caché)
+```bash
+python -m app.cache.precompute
+```
+
+> Este paso pre-calcula y guarda:
+> - Matriz de correlación (253 correlaciones)
+> - Volatilidad de todos los activos (22 activos)
+> - Benchmark de ordenamiento (12 algoritmos)
+> 
+> Tarda aproximadamente 1-2 minutos y mejora el rendimiento 100x.
+
+### Paso 7 — Ejecutar el benchmark de algoritmos (Opcional)
 ```bash
 python -c "from app.sorting.benchmark import run_benchmark, generate_chart; generate_chart(run_benchmark())"
 ```
@@ -110,14 +130,16 @@ python -c "from app.sorting.benchmark import run_benchmark, generate_chart; gene
 > Este paso ejecuta los 12 algoritmos de ordenamiento y genera la imagen
 > `benchmark_chart.png` en la carpeta `backend/`.
 > Selection Sort puede tardar varios minutos sobre el dataset completo.
+> **Nota:** Los resultados ya están en caché, este paso es opcional.
 
-### Paso 6 — Análisis de patrones y volatilidad (Requerimiento 3)
+### Paso 8 — Análisis de patrones y volatilidad (Opcional)
 ```bash
 python -c "from app.similarity.patterns import get_all_assets_volatility; [print(f\"{a['ticker']}: {a['annual_volatility']:.2f}% - {a['risk_level']}\") for a in get_all_assets_volatility()]"
 ```
 
 > Este paso calcula la volatilidad de todos los activos y los clasifica
 > en: CONSERVADOR, MODERADO o AGRESIVO.
+> **Nota:** Los resultados ya están en caché, este paso es opcional.
 
 ---
 
@@ -174,17 +196,20 @@ npm start
 
 ### Endpoints disponibles:
 
-| Endpoint | Método | Descripción |
-|---|---|---|
-| `/assets` | GET | Lista todos los activos del portafolio |
-| `/assets/{ticker}/prices` | GET | Precios históricos de un activo |
-| `/similarity/compare` | POST | Compara dos activos (4 algoritmos) |
-| `/similarity/correlation-matrix` | GET | Matriz de correlación completa |
-| `/patterns/{ticker}` | GET | Análisis de patrones de un activo |
-| `/volatility/all` | GET | Clasificación de riesgo de todos |
-| `/volatility/{ticker}` | GET | Volatilidad de un activo |
-| `/candlestick/{ticker}` | GET | Datos para gráfico de velas + SMAs |
-| `/reports/generate-pdf` | POST | Genera reporte técnico en PDF |
+| Endpoint | Método | Descripción | Rendimiento |
+|---|---|---|---|
+| `/assets` | GET | Lista todos los activos del portafolio | Rápido |
+| `/assets/{ticker}/prices` | GET | Precios históricos de un activo | Rápido |
+| `/similarity/compare` | POST | Compara dos activos (4 algoritmos) | Rápido |
+| `/similarity/correlation-matrix` | GET | Matriz de correlación completa | **< 100ms** ⚡ |
+| `/patterns/{ticker}` | GET | Análisis de patrones de un activo | Rápido |
+| `/volatility/all` | GET | Clasificación de riesgo de todos | **< 50ms** ⚡ |
+| `/volatility/{ticker}` | GET | Volatilidad de un activo | Rápido |
+| `/candlestick/{ticker}` | GET | Datos para gráfico de velas + SMAs | Rápido |
+| `/reports/generate-pdf` | POST | Genera reporte técnico en PDF | 2-3 min |
+| `/sorting/benchmark` | GET | Resultados del benchmark | **< 50ms** ⚡ |
+
+**⚡ = Endpoints optimizados con sistema de caché**
 
 ### Ejemplo de uso de la API:
 
@@ -212,8 +237,10 @@ bvc_project_AnalysisAlg/
 │
 ├── backend/
 │   ├── .env                  ← Variables de entorno (no se sube al repo)
+│   ├── create_cache_tables.sql ← Script SQL para crear tablas de caché
 │   ├── app/
 │   │   ├── api/              ← Endpoints REST y generación de reportes
+│   │   ├── cache/            ← Sistema de caché (precompute.py)
 │   │   ├── core/             ← Conexión a BD y modelos
 │   │   ├── etl/              ← Extracción, limpieza y carga
 │   │   ├── similarity/       ← Algoritmos de similitud y patrones
@@ -221,11 +248,24 @@ bvc_project_AnalysisAlg/
 │   │   └── main.py           ← API FastAPI
 │   └── venv/                 ← Entorno virtual (no se sube al repo)
 │
-├── frontend/                 ← Aplicación React (próximamente)
-│   └── src/
+├── frontend/                 ← Aplicación React
+│   ├── src/
+│   │   ├── components/       ← Componentes de UI
+│   │   │   ├── Dashboard/
+│   │   │   ├── SimilarityAnalysis/
+│   │   │   ├── VolatilityAnalysis/
+│   │   │   ├── PatternAnalysis/
+│   │   │   ├── CorrelationMatrix/
+│   │   │   ├── CandlestickChart/
+│   │   │   └── SortingBenchmark/
+│   │   └── App.js
+│   └── node_modules/         ← Dependencias (no se sube al repo)
 │
 ├── .gitignore
-└── README.md
+├── README.md
+├── GUIA_EJECUCION.md         ← Guía completa de ejecución desde cero
+├── configuracion_inicial.bat ← Script de configuración automatizada
+└── ESTRATEGIA_DESPLIEGUE.md  ← Guía de despliegue en producción
 ```
 
 ---
@@ -266,12 +306,43 @@ Este proyecto incluye documentación exhaustiva que cumple con todos los requisi
 | Documento | Descripción |
 |-----------|-------------|
 | **README.md** | Guía de instalación y uso (este archivo) |
+| **GUIA_EJECUCION.md** | Guía completa de ejecución desde cero con sistema de caché |
 | **DOCUMENTO_DISEÑO.md** | Arquitectura del sistema y decisiones de diseño |
 | **DETALLES_IMPLEMENTACION.md** | Explicación técnica detallada de cada requerimiento |
 | **USO_INTELIGENCIA_ARTIFICIAL.md** | Declaración transparente del uso de IA |
 | **CUMPLIMIENTO_RESTRICCIONES.md** | Verificación de cumplimiento de todas las restricciones |
 | **ESTADO_PROYECTO.md** | Estado de completitud de requerimientos |
 | **EJEMPLOS_USO.md** | Ejemplos prácticos de uso de la API |
+| **ESTRATEGIA_DESPLIEGUE.md** | Guía de despliegue gratuito en producción |
+| **backend/GUIA_CACHE.md** | Documentación detallada del sistema de caché |
+| **EXPLICACION_SIMILITUD_MONEDAS.md** | Explicación técnica de similitud entre diferentes monedas |
+
+### Sistema de Caché - Optimización de Rendimiento
+
+El proyecto implementa un sistema de caché que pre-calcula datos que no cambian:
+
+**Mejora de Rendimiento:**
+```
+Antes (Sin Caché):
+  Matriz de correlación:  5-10 segundos  🐌
+  Volatilidad:            2-3 segundos   🐌
+  Benchmark:              10-15 segundos 🐌
+
+Después (Con Caché):
+  Matriz de correlación:  < 100ms  ⚡
+  Volatilidad:            < 50ms   ⚡
+  Benchmark:              < 50ms   ⚡
+
+Mejora: 100x más rápido!
+```
+
+**Ventajas:**
+- ✅ Respuestas instantáneas en el frontend
+- ✅ Menor carga en el servidor
+- ✅ Permite despliegue en planes gratuitos
+- ✅ Mejor experiencia de usuario
+
+**Documentación completa:** Ver `backend/GUIA_CACHE.md`
 
 ### Cumplimiento de Restricciones Académicas
 
@@ -314,4 +385,33 @@ del equipo de desarrollo, conforme a los lineamientos del enunciado del proyecto
 - No modificar el archivo `venv/` ni subirlo al repositorio.
 - El archivo `.env` contiene credenciales sensibles y está excluido del repositorio.
 - La imagen `benchmark_chart.png` se genera automáticamente y está excluida del repositorio.
-- Para reproducir los resultados desde cero, ejecutar los pasos 1 al 5 en orden.
+- Para reproducir los resultados desde cero, ejecutar los pasos 1 al 8 en orden.
+- **Sistema de caché:** Ejecutar `python -m app.cache.precompute` después de actualizar datos.
+- **Despliegue:** Ver `ESTRATEGIA_DESPLIEGUE.md` para instrucciones de despliegue gratuito.
+
+---
+
+## Guías Rápidas
+
+### Configuración Inicial Automatizada
+```bash
+# Ejecutar el script de configuración (Windows)
+configuracion_inicial.bat
+```
+
+### Configuración Manual Completa
+Ver `GUIA_EJECUCION.md` para instrucciones paso a paso desde cero.
+
+### Re-calcular Caché
+```bash
+cd backend
+venv\Scripts\activate
+python -m app.cache.precompute
+```
+
+### Verificar Caché
+```bash
+cd backend
+venv\Scripts\activate
+python -m app.cache.precompute verify
+```

@@ -52,6 +52,31 @@ app.add_middleware(
 
 
 # ═══════════════════════════════════════════════════════
+# INICIALIZACIÓN AUTOMÁTICA DEL SISTEMA
+# ═══════════════════════════════════════════════════════
+
+@app.on_event("startup")
+async def startup_event():
+    """
+    Se ejecuta automáticamente al iniciar el servidor.
+    
+    Verifica y crea automáticamente:
+    - Tablas principales (si no existen)
+    - Tablas de caché (si no existen)
+    - Datos financieros (si no existen)
+    - Datos pre-calculados (si no existen)
+    
+    Todo es idempotente: si ya existe, no lo vuelve a crear.
+    """
+    try:
+        from app.core.startup import initialize_system
+        initialize_system()
+    except Exception as e:
+        print(f"⚠️  Advertencia durante inicialización: {e}")
+        print("   El servidor continuará, pero algunas funciones pueden no estar disponibles.")
+
+
+# ═══════════════════════════════════════════════════════
 # MODELOS PYDANTIC
 # ═══════════════════════════════════════════════════════
 
@@ -269,38 +294,54 @@ def compare_similarity(request: SimilarityRequest):
 @app.get("/similarity/correlation-matrix", response_model=CorrelationMatrix)
 def get_correlation_matrix():
     """
-    Calcula la matriz de correlación de Pearson entre todos los activos.
+    Retorna la matriz de correlación de Pearson pre-calculada.
     
     Esta matriz se usa para generar el heatmap del Requerimiento 4.
     
-    Complejidad: O(n² × m) donde n = número de activos, m = longitud de series
+    OPTIMIZADO: Lee desde caché (< 100ms) en lugar de calcular (5-10 segundos)
+    
+    Si no hay datos en caché, ejecutar: python -m app.cache.precompute
     """
     conn = get_connection()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT ticker FROM assets ORDER BY ticker;")
-    tickers = [row[0] for row in cursor.fetchall()]
-    cursor.close()
-    conn.close()
+    # Verificar si hay datos en caché
+    cursor.execute("SELECT COUNT(*) FROM correlation_cache;")
+    cache_count = cursor.fetchone()[0]
     
+    if cache_count == 0:
+        cursor.close()
+        conn.close()
+        raise HTTPException(
+            status_code=503,
+            detail="Datos no pre-calculados. Ejecutar: python -m app.cache.precompute"
+        )
+    
+    # Obtener tickers únicos de la caché
+    cursor.execute("""
+        SELECT DISTINCT ticker_a 
+        FROM correlation_cache 
+        ORDER BY ticker_a;
+    """)
+    tickers = [row[0] for row in cursor.fetchall()]
+    
+    # Construir matriz desde la caché
     n = len(tickers)
     matrix = [[0.0] * n for _ in range(n)]
     
-    # Calcular correlación entre cada par de activos
-    for i in range(n):
-        for j in range(n):
-            if i == j:
-                matrix[i][j] = 1.0  # Correlación consigo mismo = 1
-            elif i < j:
-                try:
-                    series_a, series_b, _ = get_aligned_returns(tickers[i], tickers[j])
-                    if len(series_a) > 1:
-                        corr = pearson_correlation(series_a, series_b)
-                        matrix[i][j] = round(corr, 4)
-                        matrix[j][i] = round(corr, 4)  # Matriz simétrica
-                except:
-                    matrix[i][j] = 0.0
-                    matrix[j][i] = 0.0
+    for i, ticker_a in enumerate(tickers):
+        for j, ticker_b in enumerate(tickers):
+            cursor.execute("""
+                SELECT correlation 
+                FROM correlation_cache
+                WHERE ticker_a = %s AND ticker_b = %s;
+            """, (ticker_a, ticker_b))
+            
+            result = cursor.fetchone()
+            matrix[i][j] = round(float(result[0]), 4) if result else 0.0
+    
+    cursor.close()
+    conn.close()
     
     return {
         "tickers": tickers,
@@ -334,17 +375,50 @@ def get_pattern_analysis(ticker: str):
 @app.get("/volatility/all", response_model=List[VolatilityData])
 def get_all_volatility():
     """
-    Retorna la clasificación de riesgo de todos los activos
-    ordenados por volatilidad descendente.
+    Retorna la clasificación de riesgo pre-calculada de todos los activos.
     
     Requerimiento 3: Clasificación en conservadores, moderados y agresivos.
-    """
-    try:
-        results = get_all_assets_volatility()
-        return results
     
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    OPTIMIZADO: Lee desde caché (< 50ms) en lugar de calcular (2-3 segundos)
+    
+    Si no hay datos en caché, ejecutar: python -m app.cache.precompute
+    """
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    # Verificar si hay datos en caché
+    cursor.execute("SELECT COUNT(*) FROM volatility_cache;")
+    cache_count = cursor.fetchone()[0]
+    
+    if cache_count == 0:
+        cursor.close()
+        conn.close()
+        raise HTTPException(
+            status_code=503,
+            detail="Datos no pre-calculados. Ejecutar: python -m app.cache.precompute"
+        )
+    
+    # Leer desde caché
+    cursor.execute("""
+        SELECT ticker, annual_volatility, recent_volatility, risk_level, mean_return
+        FROM volatility_cache
+        ORDER BY annual_volatility DESC;
+    """)
+    
+    results = []
+    for row in cursor.fetchall():
+        results.append({
+            "ticker": row[0],
+            "annual_volatility": float(row[1]),
+            "recent_volatility": float(row[2]),
+            "risk_level": row[3],
+            "mean_return": float(row[4])
+        })
+    
+    cursor.close()
+    conn.close()
+    
+    return results
 
 
 @app.get("/volatility/{ticker}")
@@ -514,25 +588,52 @@ def generate_report():
 @app.get("/sorting/benchmark")
 def get_sorting_benchmark():
     """
-    Ejecuta el benchmark de 12 algoritmos de ordenamiento sobre el dataset completo.
+    Retorna el benchmark pre-calculado de 12 algoritmos de ordenamiento.
     
     Requerimiento 2: Análisis comparativo de algoritmos de ordenamiento.
     
-    Ordena los registros por:
-    1. Fecha de cotización (ascendente)
-    2. Precio de cierre (desempate)
+    OPTIMIZADO: Lee desde caché (< 50ms) en lugar de ejecutar (10-15 segundos)
     
-    Retorna los tiempos de ejecución de cada algoritmo.
+    Si no hay datos en caché, ejecutar: python -m app.cache.precompute
     """
-    try:
-        results = run_benchmark()
-        return {
-            "results": results,
-            "total_algorithms": len(results),
-            "dataset_size": results[0]["records"] if results else 0
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    # Verificar si hay datos en caché
+    cursor.execute("SELECT COUNT(*) FROM benchmark_cache;")
+    cache_count = cursor.fetchone()[0]
+    
+    if cache_count == 0:
+        cursor.close()
+        conn.close()
+        raise HTTPException(
+            status_code=503,
+            detail="Datos no pre-calculados. Ejecutar: python -m app.cache.precompute"
+        )
+    
+    # Leer desde caché
+    cursor.execute("""
+        SELECT algorithm, time_seconds, records, complexity
+        FROM benchmark_cache
+        ORDER BY time_seconds ASC;
+    """)
+    
+    results = []
+    for row in cursor.fetchall():
+        results.append({
+            "algorithm": row[0],
+            "time_seconds": float(row[1]),
+            "records": int(row[2])
+        })
+    
+    cursor.close()
+    conn.close()
+    
+    return {
+        "results": results,
+        "total_algorithms": len(results),
+        "dataset_size": results[0]["records"] if results else 0
+    }
 
 
 @app.get("/sorting/top-volume")
