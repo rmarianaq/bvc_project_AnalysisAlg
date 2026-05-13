@@ -206,8 +206,8 @@ def download_financial_data():
     print("   (Esto puede tardar 2-3 minutos)")
     
     try:
-        from app.etl.extractor import extract_all_data
-        extract_all_data()
+        from app.etl.extractor import run_etl
+        run_etl()
         print("✅ Datos financieros descargados")
         return True
     except Exception as e:
