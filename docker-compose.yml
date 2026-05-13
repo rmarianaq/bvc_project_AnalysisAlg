@@ -46,7 +46,10 @@ services:
         uvicorn app.main:app --host 0.0.0.0 --port 8000
       "
 
-  # Frontend React (opcional - para desarrollo)
+  # Frontend React (OPCIONAL - Solo para desarrollo local)
+  # Para producción, se recomienda usar Vercel (gratis, más rápido)
+  # Ver: DESPLIEGUE_FRONTEND.md
+  #
   # frontend:
   #   image: node:18-alpine
   #   container_name: bvc_frontend
@@ -55,6 +58,8 @@ services:
   #     - ./frontend:/app
   #   ports:
   #     - "3000:3000"
+  #   environment:
+  #     - REACT_APP_API_URL=http://localhost:8000
   #   command: sh -c "npm install && npm start"
   #   depends_on:
   #     - backend

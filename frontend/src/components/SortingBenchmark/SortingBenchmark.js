@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './SortingBenchmark.css';
-
-const API_BASE_URL = 'http://localhost:8000';
+import { API_BASE_URL } from '../../config';
 
 function SortingBenchmark() {
   const [benchmarkData, setBenchmarkData] = useState(null);
